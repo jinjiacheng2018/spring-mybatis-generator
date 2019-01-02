@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tgram.boot.mapper.EmployeeMapper">
+
+  <resultMap id="BaseResultMap" type="com.tgram.boot.entity.Employee">
+    <result column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="emp_age" jdbcType="INTEGER" property="empAge" />
+    <result column="emp_birth" jdbcType="TIMESTAMP" property="empBirth" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.tgram.boot.entity.Employee">
+    insert into employee (emp_id, emp_name, emp_age, 
+      emp_birth)
+    values (#{empId,jdbcType=INTEGER}, #{empName,jdbcType=VARCHAR}, #{empAge,jdbcType=INTEGER}, 
+      #{empBirth,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.tgram.boot.entity.Employee">
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empId != null">
+        emp_id,
+      </if>
+      <if test="empName != null">
+        emp_name,
+      </if>
+      <if test="empAge != null">
+        emp_age,
+      </if>
+      <if test="empBirth != null">
+        emp_birth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empId != null">
+        #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="empName != null">
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empAge != null">
+        #{empAge,jdbcType=INTEGER},
+      </if>
+      <if test="empBirth != null">
+        #{empBirth,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

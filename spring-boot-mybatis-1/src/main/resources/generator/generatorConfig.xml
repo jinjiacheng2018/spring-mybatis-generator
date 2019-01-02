@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 指定本地连接数据库的jar包绝对路径 -->
+    <classPathEntry
+            location="D:\MyMavenRepository\repository\mysql\mysql-connector-java\8.0.13\mysql-connector-java-8.0.13.jar"/>
+
+    <!--
+       context:配置数据库的上下文信息
+                id:唯一标识,为了方便引用
+                targetRuntime:指定目标生成的机制
+                    - MyBatis3Simple:生成简单版的CRUD(增删改查)接口
+                    - MyBatis3:生成豪华版的CRUD接口
+     -->
+    <context id="MysqlTables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 去掉生成的类或方法添加注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- jdbcConnection:配置JDBC连接数据库的基本信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://118.31.7.33:3306/mydatabase"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--
+			javaModelGenerator：配置javaBean类的生成策略
+				targetPackage:生成的JavaBean类所在的包名
+				targetProject:生成的JavaBean类所在的项目目录路径(.\src：表示生成在当前项目根目录的src目录下)
+		-->
+        <!--生成PO实体类-->
+        <javaModelGenerator targetPackage="com.tgram.boot.entity" targetProject="src/main/java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--生成Mybatis XML Mapper Sql操作-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+        </sqlMapGenerator>
+
+        <!--生成Mybatis Mpper数据操作接口-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tgram.boot.mapper" targetProject="src/main/java">
+        </javaClientGenerator>
+
+        <!--
+			table:指定数据表的生成策略
+				tableName：需要生成JavaBean类的数据库对应的表名
+				domainObjectName：需要生成的JavaBean类的类名
+		-->
+        <table tableName="employee" domainObjectName="Employee" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+
+        <!--<table tableName="%">
+             <generatedKey column="id" sqlStatement="Mysql"/>
+         </table>-->
+    </context>
+</generatorConfiguration>
